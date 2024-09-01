@@ -18,7 +18,7 @@ body {
   display: flex;
   flex-direction: row;
 
-  width: 960px;
+  max-width: 960px;
   min-height: 100vh;
 
   margin: 0 auto;
@@ -29,4 +29,16 @@ body {
 
 .wrapper__app::before {
   content: '';
+  position: relative;
+  top: -110px;
+  left: 46.5%;
+
+  width: 62px;
+  height: 70px;
+
+  background: url('./assets/Logo.png');
+  background-position: -10px -10px;
+  background-repeat: no-repeat;
+  // background-size: contain;
+  // border: 1px solid black;
 }

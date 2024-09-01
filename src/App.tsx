@@ -2,7 +2,6 @@
 import classes from './App.module.scss'
 import AsideBar from './components/AsideBar/index'
 
-// console.log(classes);
 function App() {
 
   return (
