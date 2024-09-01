@@ -1,0 +1,32 @@
+$base-color: rgb(194, 188, 188);
+$app-color: #c0dfdf;
+
+body {
+  background-color: $base-color;
+  margin: 0;
+}
+
+// #root {
+//   max-width: 1280px;
+//   margin: 0 auto;
+//   padding: 2rem;
+//   text-align: center;
+//   background-color: $base-color;
+// }
+
+.wrapper__app {
+  display: flex;
+  flex-direction: row;
+
+  width: 960px;
+  min-height: 100vh;
+
+  margin: 0 auto;
+  padding: 160px 130px 50px 130px;
+
+  background-color: $app-color;
+}
+
+.wrapper__app::before {
+  content: '';
+}
