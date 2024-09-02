@@ -1,7 +1,6 @@
 // import React from 'react'
+import classes from './AsideBar.module.scss'
 
 export default function AsideBar() {
-  return (
-    <div>AsideBar</div>
-  )
+    return <aside className={classes["aviasales__menu"]}>количество пересадок</aside>;
 }
