@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { asideState } from '../interfase/asideInterface';
 
 const initialState: asideState = {
-    list: [
+    choiceList: [
         {
             id: 1,
             title: 'Все',
@@ -36,7 +36,7 @@ const asideSlice = createSlice({
     initialState,
     reducers: {
         toggleStatus: (state, { payload }: PayloadAction<number>) => {
-            const toggleElem = state.list.find((item) => item.id === payload);
+            const toggleElem = state.choiceList.find((item) => item.id === payload);
             if (toggleElem) {
                 toggleElem.status = !toggleElem.status;
             }

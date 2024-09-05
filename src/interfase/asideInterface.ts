@@ -5,5 +5,5 @@ export interface asideItem {
 }
 
 export interface asideState {
-    list: asideItem[];
+    choiceList: asideItem[];
 }

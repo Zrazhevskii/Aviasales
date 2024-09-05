@@ -5,6 +5,9 @@ $menu-color: #ffffff;
     height: 258px;
     background-color: $menu-color;
     border-radius: 5px;
+    margin: 0;
+    padding: 0;
+    // border: 1px solid black;
 
     &__title {
         font-size: 12px;
