@@ -60,5 +60,7 @@ module.exports = {
         'jsx-a11y/no-autofocus': 'off',
         'no-alert': 'off',
         'react/require-default-props': 0,
+        'no-param-reassign': 'off',
+        // 'no-return-assign': 'off',
     },
 };

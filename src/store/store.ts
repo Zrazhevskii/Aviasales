@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit';
-import asideSlice from './AsideSlise';
+import AsideSlice from './AsideSlise';
+import HeaderSlice from './HeaderSlice';
 
 const store = configureStore({
     reducer: {
-        aside: asideSlice,
+        aside: AsideSlice,
+        header: HeaderSlice,
     },
 });
 

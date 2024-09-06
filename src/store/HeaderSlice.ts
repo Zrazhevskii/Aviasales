@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { headerState } from '../interfase/headerinterface';
 
 const initialState: headerState = {
-    ticketAggregate: [
+    choiceHeader: [
         {
             id: 1,
             title: 'САМЫЙ ДЕШЕВЫЙ',
@@ -21,18 +21,22 @@ const initialState: headerState = {
     ],
 };
 
-const headerSlice = createSlice({
-    name: 'ticketAggregate',
+const HeaderSlice = createSlice({
+    name: 'header',
     initialState,
     reducers: {
         changeStatusHeaderElem: (state, { payload }: PayloadAction<number>) => {
-            const activeElement = state.ticketAggregate.find((item) => item.id === payload);
-            if (activeElement) {
-                activeElement.status = !activeElement.status;
-            }
+            state.choiceHeader = state.choiceHeader.map((item) => {
+                if (item.id === payload) {
+                    item.status = !item.status;
+                } else {
+                    item.status = false;
+                }
+                return item;
+            });
         },
     },
 });
 
-export const { changeStatusHeaderElem } = headerSlice.actions;
-export default headerSlice.reducer;
+export const { changeStatusHeaderElem } = HeaderSlice.actions;
+export default HeaderSlice.reducer;

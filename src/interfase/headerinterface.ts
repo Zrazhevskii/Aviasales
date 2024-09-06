@@ -5,5 +5,5 @@ export interface headerItem {
 }
 
 export interface headerState {
-    ticketAggregate: headerItem[];
+    choiceHeader: headerItem[];
 }

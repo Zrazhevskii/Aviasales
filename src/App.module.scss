@@ -1,9 +1,8 @@
-$base-color: rgb(194, 188, 188);
-$app-color: #d1e3e3;
+@import '../src/style/var';
+// @import '../src/components/AsideBar/AsideBar.module.scss';
 
 body {
     font-family: 'Open Sans', sans-serif;
-
     background-color: $base-color;
     margin: 0;
 }
@@ -48,5 +47,5 @@ body {
     min-height: 300px;
 
     padding-left: 20px;
-    background-color: aqua;
+    // background-color:;
 }

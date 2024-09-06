@@ -31,7 +31,7 @@ const initialState: asideState = {
     ],
 };
 
-const asideSlice = createSlice({
+const AsideSlice = createSlice({
     name: 'aside',
     initialState,
     reducers: {
@@ -44,5 +44,5 @@ const asideSlice = createSlice({
     },
 });
 
-export const { toggleStatus } = asideSlice.actions;
-export default asideSlice.reducer;
+export const { toggleStatus } = AsideSlice.actions;
+export default AsideSlice.reducer;

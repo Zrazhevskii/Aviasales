@@ -1,0 +1,13 @@
+.header {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    justify-items: center;
+    align-items: center;
+
+    width: 512px;
+    height: 50px;
+}
+
+.header:first-child {
+    background-color: rgb(53, 41, 27);
+}
