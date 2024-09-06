@@ -36,13 +36,28 @@ const AsideSlice = createSlice({
     initialState,
     reducers: {
         toggleStatus: (state, { payload }: PayloadAction<number>) => {
+            if (state.choiceList[0].status === true) {
+                state.choiceList[0].status = false;
+            }
             const toggleElem = state.choiceList.find((item) => item.id === payload);
             if (toggleElem) {
                 toggleElem.status = !toggleElem.status;
             }
         },
+
+        toggleAllItemStatus: (state) => {
+            if (state.choiceList[0].status === true) {
+                state.choiceList.forEach((item) => {
+                    item.status = false;
+                });
+            } else {
+                state.choiceList.forEach((item) => {
+                    item.status = true;
+                });
+            }
+        },
     },
 });
 
-export const { toggleStatus } = AsideSlice.actions;
+export const { toggleStatus, toggleAllItemStatus } = AsideSlice.actions;
 export default AsideSlice.reducer;
