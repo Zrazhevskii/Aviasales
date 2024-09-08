@@ -2,7 +2,7 @@
 import classes from './App.module.scss';
 import AsideBar from './components/AsideBar/index';
 import Header from './components/Header/index';
-// import TicketList from './components/TicketList/index';
+import TicketList from './components/TicketList/index';
 
 function App() {
     return (
@@ -11,6 +11,7 @@ function App() {
                 <AsideBar />
                 <div className={classes.wrapper__context}>
                     <Header />
+                    <TicketList />
                 </div>
             </div>
         </div>
