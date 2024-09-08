@@ -36,12 +36,19 @@ const AsideSlice = createSlice({
     initialState,
     reducers: {
         toggleStatus: (state, { payload }: PayloadAction<number>) => {
-            if (state.choiceList[0].status === true) {
-                state.choiceList[0].status = false;
-            }
             const toggleElem = state.choiceList.find((item) => item.id === payload);
             if (toggleElem) {
                 toggleElem.status = !toggleElem.status;
+            }
+
+            if (state.choiceList[0].status === true) {
+                state.choiceList[0].status = false;
+            }
+
+            const firstStatus = state.choiceList.slice(1).find((i) => i.status === state.choiceList[0].status);
+
+            if (firstStatus === undefined) {
+                state.choiceList[0].status = true;
             }
         },
 

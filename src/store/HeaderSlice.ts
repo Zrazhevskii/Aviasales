@@ -15,7 +15,7 @@ const initialState: headerState = {
         },
         {
             id: 3,
-            title: 'САМЫЙ ДЕШЕВЫЙ',
+            title: 'САМЫЙ ОПТИМАЛЬНЫЙ',
             status: false,
         },
     ],
