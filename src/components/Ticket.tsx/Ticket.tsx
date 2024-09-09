@@ -4,10 +4,11 @@ import { TicketItem } from '../../interfase/tucketsInterface';
 import './Ticket.css';
 
 export default function Ticket({ price, carrier, segments }: TicketItem) {
+    // console.log(price.toLocaleString());
     return (
         <section className="ticket__box">
             <div className="ticket__box__header">
-                <div className="ticket__box__price">{price} ₽</div>
+                <div className="ticket__box__price">{price.toLocaleString()} ₽</div>
                 <img src={`//pics.avs.io/99/36/${carrier}.png`} alt="" className="ticket__box__img" />
             </div>
             {segments.map((elem) => (
