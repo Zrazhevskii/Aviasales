@@ -1,4 +1,5 @@
 export interface TicketsSegments {
+    // Код города (iata)
     origin: string;
     // Код города (iata)
     destination: string;
@@ -10,7 +11,7 @@ export interface TicketsSegments {
     duration: number;
 }
 
-export interface Ticket {
+export interface TicketItem {
     // Цена в рублях
     price: number;
     // Код авиакомпании (iata)
@@ -21,7 +22,7 @@ export interface Ticket {
 }
 
 export interface TicketsState {
-    tickets: Ticket[];
+    tickets: TicketItem[];
     loading: boolean;
     error: boolean;
 }
