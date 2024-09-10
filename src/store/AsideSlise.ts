@@ -6,27 +6,27 @@ const initialState: asideState = {
         {
             id: 1,
             title: 'Все',
-            status: false,
+            status: true,
         },
         {
             id: 2,
             title: 'Без пересадок',
-            status: false,
+            status: true,
         },
         {
             id: 3,
             title: '1 пересадка',
-            status: false,
+            status: true,
         },
         {
             id: 4,
             title: '2 пересадки',
-            status: false,
+            status: true,
         },
         {
             id: 5,
             title: '3 пересадки',
-            status: false,
+            status: true,
         },
     ],
 };

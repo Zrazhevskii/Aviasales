@@ -1,5 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TicketItem, TicketsState } from '../interfase/tucketsInterface';
+import { getTickets } from '../servises/TicketsApi';
 
 const initialState: TicketsState = {
     tickets: [
@@ -72,25 +73,35 @@ const initialState: TicketsState = {
     ],
     loading: false,
     error: false,
+    showMoreTickets: 5,
 };
 
 const TicketSlice = createSlice({
     name: 'aviatickets',
     initialState,
     reducers: {
-        addTickets: (state, { payload }: PayloadAction<TicketItem>) => {
-            console.log(state.tickets, payload);
-            // state
-            // const st = state.tickets;
-            // const ap = action;
+        addTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
+            state.tickets = [...state.tickets, ...payload];
         },
         errorTicket: (state, { payload }: PayloadAction<boolean>) => {
             state.error = payload;
-            // state.errorInfo = payload;
         },
         loadingTickets: (state) => {
             state.loading = !state.loading;
         },
+    },
+    extraReducers: (builder) => {
+        builder
+            .addCase(getTickets.pending, (state) => {
+                state.loading = true;
+            })
+            .addCase(getTickets.fulfilled, (state, { payload }) => {
+                state.loading = false;
+                state.tickets = [...state.tickets, ...payload];
+            })
+            .addCase(getTickets.rejected, (state) => {
+                state.error = true;
+            });
     },
 });
 

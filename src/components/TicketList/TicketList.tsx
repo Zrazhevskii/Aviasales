@@ -5,14 +5,15 @@ import Ticket from '../Ticket.tsx';
 import { useAppSelector } from '../../hooks/hooks';
 
 export default function TicketList(): JSX.Element {
-    const ticketsArr = useAppSelector((state) => state.aviTickets.tickets);
-    // console.log(ticketsArr);
-    // const { price, carrier, segments } = ticketsArr;
+    const { tickets, showMoreTickets } = useAppSelector((state) => state.aviTickets);
     return (
-        <div className="wrapper__tickets">
-            {ticketsArr.map((item) => (
+        <section className="wrapper__tickets">
+            {tickets.slice(0, showMoreTickets).map((item) => (
                 <Ticket key={uuidv4()} {...item} />
             ))}
-        </div>
+            <button type="button" className="wrapper__tickets__btn__more__tickets">
+                ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
+            </button>
+        </section>
     );
 }

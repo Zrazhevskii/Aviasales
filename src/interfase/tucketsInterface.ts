@@ -25,4 +25,9 @@ export interface TicketsState {
     tickets: TicketItem[];
     loading: boolean;
     error: boolean;
+    showMoreTickets: number;
 }
+
+// export interface TicketsAll {
+//     tickets: TicketItem[];
+// }

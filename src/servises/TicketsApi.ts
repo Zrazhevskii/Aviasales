@@ -1,13 +1,9 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { errorTicket, loadingTickets } from '../store/TicketsSlice';
-// import { useAppDispatch } from '../hooks/hooks';
+import { errorTicket } from '../store/TicketsSlice';
+import { TicketItem } from '../interfase/tucketsInterface';
 
-// if (!localStorage.getItem('searchId')) {
-//     localStorage.setItem('searchId', 'd52e0b280cec70a79b39f1de4e2002d0');
-// }
 const idUrl = 'https://aviasales-test-api.kata.academy/search';
-// const dispatch = useAppDispatch();
 
 const getSearchId = createAsyncThunk('idName/fetchIdName', (_, { dispatch }) => {
     const response = axios
@@ -19,26 +15,28 @@ const getSearchId = createAsyncThunk('idName/fetchIdName', (_, { dispatch }) => 
     return response;
 });
 
-export const getTickets = createAsyncThunk('ticketsArr/fetchTickets', (_, { dispatch }) => {
-    dispatch(loadingTickets());
-    const apiId = localStorage.getItem('searchId');
+export const getTickets = createAsyncThunk<TicketItem[], { rejectWithValue: string }>(
+    'ticketsArr/fetchTickets',
+    (_, { rejectWithValue }) => {
+        const apiId = localStorage.getItem('searchId');
 
-    const response = axios
-        .get('https://aviasales-test-api.kata.academy/tickets', {
-            params: {
-                searchId: apiId,
-            },
-        })
-        .then((data) => {
-            console.log(data);
-            dispatch(loadingTickets());
-        })
-        .catch((error) => {
-            console.log(error);
-            dispatch(errorTicket(true));
-        });
-    return response;
-});
+        const response = axios
+            .get('https://aviasales-test-api.kata.academy/tickets', {
+                params: {
+                    searchId: apiId,
+                },
+            })
+            .then((data) => {
+                // if (!data) {
+                return data.data;
+                // }
+            })
+            .catch((error) => {
+                return rejectWithValue(error.message);
+            });
+        return response;
+    },
+);
 
 // getSearchId();
 

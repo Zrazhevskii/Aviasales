@@ -4,7 +4,6 @@ import { TicketItem } from '../../interfase/tucketsInterface';
 import './Ticket.css';
 
 export default function Ticket({ price, carrier, segments }: TicketItem) {
-    // console.log(price.toLocaleString());
     return (
         <section className="ticket__box">
             <div className="ticket__box__header">
