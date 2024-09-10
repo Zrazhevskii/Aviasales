@@ -4,27 +4,27 @@ import { asideState } from '../interfase/asideInterface';
 const initialState: asideState = {
     choiceList: [
         {
-            id: 1,
+            id: 11,
             title: 'Все',
-            status: true,
+            status: false,
         },
         {
-            id: 2,
+            id: 10,
             title: 'Без пересадок',
             status: true,
         },
         {
-            id: 3,
+            id: 1,
             title: '1 пересадка',
-            status: true,
+            status: false,
         },
         {
-            id: 4,
+            id: 2,
             title: '2 пересадки',
             status: true,
         },
         {
-            id: 5,
+            id: 3,
             title: '3 пересадки',
             status: true,
         },

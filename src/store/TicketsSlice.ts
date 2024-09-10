@@ -12,7 +12,7 @@ const initialState: TicketsState = {
                     origin: 'MOW',
                     destination: 'HKT',
                     date: '2024-07-07T19:23:37.881Z',
-                    stops: ['DXB', 'JNB'],
+                    stops: ['DXB', 'JNB', 'JNB'],
                     duration: 1214,
                 },
                 {
@@ -20,7 +20,7 @@ const initialState: TicketsState = {
                     destination: 'MOW',
                     date: '2024-10-03T10:37:28.129Z',
                     stops: ['DXB'],
-                    duration: 1425,
+                    duration: 1415,
                 },
             ],
         },
@@ -33,14 +33,14 @@ const initialState: TicketsState = {
                     destination: 'HKT',
                     date: '2025-03-15T17:16:05.864Z',
                     stops: ['IST', 'HKG'],
-                    duration: 1206,
+                    duration: 1096,
                 },
                 {
                     origin: 'HKT',
                     destination: 'MOW',
                     date: '2025-11-25T07:28:09.038Z',
                     stops: ['DOH'],
-                    duration: 984,
+                    duration: 960,
                 },
             ],
         },
@@ -52,20 +52,20 @@ const initialState: TicketsState = {
                     origin: 'MOW',
                     destination: 'HKT',
                     date: '2024-07-07T19:23:37.881Z',
-                    stops: ['DXB', 'JNB'],
-                    duration: 1214,
+                    stops: ['DXB'],
+                    duration: 1231,
                 },
                 {
                     origin: 'HKT',
                     destination: 'MOW',
                     date: '2024-10-03T10:37:28.129Z',
                     stops: ['DXB', 'JNB', 'KTR'],
-                    duration: 1425,
+                    duration: 1005,
                 },
             ],
         },
         {
-            price: 39730,
+            price: 9730,
             carrier: 'DP',
             segments: [
                 {
@@ -93,7 +93,7 @@ const initialState: TicketsState = {
                     destination: 'HKT',
                     date: '2024-07-07T19:23:37.881Z',
                     stops: ['DXB', 'JNB'],
-                    duration: 1214,
+                    duration: 1202,
                 },
                 {
                     origin: 'HKT',
@@ -113,6 +113,66 @@ const initialState: TicketsState = {
                     destination: 'HKT',
                     date: '2025-03-15T17:16:05.864Z',
                     stops: ['IST', 'HKG'],
+                    duration: 1106,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2025-11-25T07:28:09.038Z',
+                    stops: [],
+                    duration: 990,
+                },
+            ],
+        },
+        {
+            price: 36230,
+            carrier: 'DP',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2025-03-15T17:16:05.864Z',
+                    stops: [],
+                    duration: 1246,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2025-11-25T07:28:09.038Z',
+                    stops: [],
+                    duration: 1084,
+                },
+            ],
+        },
+        {
+            price: 10050,
+            carrier: 'AK',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2024-07-07T19:23:37.881Z',
+                    stops: ['DXB', 'JNB'],
+                    duration: 1314,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2024-10-03T10:37:28.129Z',
+                    stops: ['DXB'],
+                    duration: 1025,
+                },
+            ],
+        },
+        {
+            price: 22730,
+            carrier: 'DP',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2025-03-15T17:16:05.864Z',
+                    stops: [],
                     duration: 1206,
                 },
                 {
@@ -120,7 +180,7 @@ const initialState: TicketsState = {
                     destination: 'MOW',
                     date: '2025-11-25T07:28:09.038Z',
                     stops: [],
-                    duration: 984,
+                    duration: 1984,
                 },
             ],
         },
@@ -138,7 +198,7 @@ const TicketSlice = createSlice({
     reducers: {
         addTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
             // state.tickets = [...state.tickets, ...payload];
-            state.copyTickets = [...state.tickets, ...payload];
+            state.copyTickets = payload;
         },
         errorTicket: (state, { payload }: PayloadAction<boolean>) => {
             state.error = payload;
@@ -151,6 +211,10 @@ const TicketSlice = createSlice({
         },
         sortPriceTicket: (state) => {
             state.tickets = state.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
+        },
+        sortPriceCopyTicket: (state, { payload }: PayloadAction<TicketItem[]>) => {
+            state.copyTickets = payload;
+            state.copyTickets = state.copyTickets.sort((a, b) => (a.price > b.price ? 1 : -1));
         },
         noResultTickets: (state, { payload }: PayloadAction<boolean>) => {
             state.noResult = payload;
@@ -168,10 +232,18 @@ const TicketSlice = createSlice({
             })
             .addCase(getTickets.rejected, (state) => {
                 state.error = true;
+                state.loading = false;
             });
     },
 });
 
-export const { addTickets, errorTicket, loadingTickets, moreTickets, sortPriceTicket, noResultTickets } =
-    TicketSlice.actions;
+export const {
+    addTickets,
+    errorTicket,
+    loadingTickets,
+    moreTickets,
+    sortPriceTicket,
+    noResultTickets,
+    sortPriceCopyTicket,
+} = TicketSlice.actions;
 export default TicketSlice.reducer;

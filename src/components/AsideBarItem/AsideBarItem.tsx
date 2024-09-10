@@ -9,7 +9,7 @@ export default function AsideBarItem({ id, title, status }: asideItem) {
     const dispatch = useAppDispatch();
 
     const changeStatusHandle = (idItem: number) => {
-        if (idItem === 1) {
+        if (idItem === 11) {
             // dispatch(getTickets());
             return dispatch(toggleAllItemStatus());
         }
