@@ -6,74 +6,130 @@ const initialState: TicketsState = {
     tickets: [
         {
             price: 19950,
-            // Код авиакомпании (iata)
-            carrier: 'AK',
-            // Массив перелётов.
-            // В тестовом задании это всегда поиск "туда-обратно" значит состоит из двух элементов
+            carrier: 'UN',
             segments: [
                 {
-                    // Код города (iata)
                     origin: 'MOW',
-                    // Код города (iata)
                     destination: 'HKT',
-                    // Дата и время вылета туда
                     date: '2024-07-07T19:23:37.881Z',
-                    // Массив кодов (iata) городов с пересадками
                     stops: ['DXB', 'JNB'],
-                    // Общее время перелёта в минутах
                     duration: 1214,
                 },
                 {
-                    // Код города (iata)
                     origin: 'HKT',
-                    // Код города (iata)
                     destination: 'MOW',
-                    // Дата и время вылета обратно
                     date: '2024-10-03T10:37:28.129Z',
-                    // Массив кодов (iata) городов с пересадками
-                    stops: ['DXB', 'JNB', 'KTR'],
-                    // Общее время перелёта в минутах
+                    stops: ['DXB'],
                     duration: 1425,
                 },
             ],
         },
         {
             price: 31730,
-            // Код авиакомпании (iata)
             carrier: 'DP',
-            // Массив перелётов.
-            // В тестовом задании это всегда поиск "туда-обратно" значит состоит из двух элементов
             segments: [
                 {
-                    // Код города (iata)
                     origin: 'MOW',
-                    // Код города (iata)
                     destination: 'HKT',
-                    // Дата и время вылета туда
                     date: '2025-03-15T17:16:05.864Z',
-                    // Массив кодов (iata) городов с пересадками
                     stops: ['IST', 'HKG'],
-                    // Общее время перелёта в минутах
                     duration: 1206,
                 },
                 {
-                    // Код города (iata)
                     origin: 'HKT',
-                    // Код города (iata)
                     destination: 'MOW',
-                    // Дата и время вылета обратно
                     date: '2025-11-25T07:28:09.038Z',
-                    // Массив кодов (iata) городов с пересадками
                     stops: ['DOH'],
-                    // Общее время перелёта в минутах
+                    duration: 984,
+                },
+            ],
+        },
+        {
+            price: 10950,
+            carrier: 'KL',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2024-07-07T19:23:37.881Z',
+                    stops: ['DXB', 'JNB'],
+                    duration: 1214,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2024-10-03T10:37:28.129Z',
+                    stops: ['DXB', 'JNB', 'KTR'],
+                    duration: 1425,
+                },
+            ],
+        },
+        {
+            price: 39730,
+            carrier: 'DP',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2025-03-15T17:16:05.864Z',
+                    stops: [],
+                    duration: 1206,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2025-11-25T07:28:09.038Z',
+                    stops: [],
+                    duration: 984,
+                },
+            ],
+        },
+        {
+            price: 27950,
+            carrier: 'AK',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2024-07-07T19:23:37.881Z',
+                    stops: ['DXB', 'JNB'],
+                    duration: 1214,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2024-10-03T10:37:28.129Z',
+                    stops: ['DXB', 'JNB', 'KTR'],
+                    duration: 1425,
+                },
+            ],
+        },
+        {
+            price: 21730,
+            carrier: 'DP',
+            segments: [
+                {
+                    origin: 'MOW',
+                    destination: 'HKT',
+                    date: '2025-03-15T17:16:05.864Z',
+                    stops: ['IST', 'HKG'],
+                    duration: 1206,
+                },
+                {
+                    origin: 'HKT',
+                    destination: 'MOW',
+                    date: '2025-11-25T07:28:09.038Z',
+                    stops: [],
                     duration: 984,
                 },
             ],
         },
     ],
+    copyTickets: [],
     loading: false,
     error: false,
     showMoreTickets: 5,
+    noResult: false,
 };
 
 const TicketSlice = createSlice({
@@ -81,13 +137,23 @@ const TicketSlice = createSlice({
     initialState,
     reducers: {
         addTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
-            state.tickets = [...state.tickets, ...payload];
+            // state.tickets = [...state.tickets, ...payload];
+            state.copyTickets = [...state.tickets, ...payload];
         },
         errorTicket: (state, { payload }: PayloadAction<boolean>) => {
             state.error = payload;
         },
         loadingTickets: (state) => {
             state.loading = !state.loading;
+        },
+        moreTickets: (state) => {
+            state.showMoreTickets += 5;
+        },
+        sortPriceTicket: (state) => {
+            state.tickets = state.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
+        },
+        noResultTickets: (state, { payload }: PayloadAction<boolean>) => {
+            state.noResult = payload;
         },
     },
     extraReducers: (builder) => {
@@ -98,6 +164,7 @@ const TicketSlice = createSlice({
             .addCase(getTickets.fulfilled, (state, { payload }) => {
                 state.loading = false;
                 state.tickets = [...state.tickets, ...payload];
+                state.copyTickets = [...state.tickets, ...payload];
             })
             .addCase(getTickets.rejected, (state) => {
                 state.error = true;
@@ -105,5 +172,6 @@ const TicketSlice = createSlice({
     },
 });
 
-export const { addTickets, errorTicket, loadingTickets } = TicketSlice.actions;
+export const { addTickets, errorTicket, loadingTickets, moreTickets, sortPriceTicket, noResultTickets } =
+    TicketSlice.actions;
 export default TicketSlice.reducer;

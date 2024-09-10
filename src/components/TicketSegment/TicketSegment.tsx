@@ -2,11 +2,11 @@
 import './TicketSegment.css';
 import { TicketsSegments } from '../../interfase/tucketsInterface';
 import formateDate from '../../utils/formateDate';
+import transplantsName from '../../utils/transplantsName';
 
 export default function TicketSegment({ origin, destination, date, stops, duration }: TicketsSegments) {
     const min = duration % 60;
     const hourDuration = Math.floor(duration / 60);
-    const transplants = stops.length > 1 ? ' пересадки' : ' пересадка';
 
     return (
         <div className="segment__item">
@@ -23,10 +23,7 @@ export default function TicketSegment({ origin, destination, date, stops, durati
                 </span>
             </div>
             <div className="segment__item__info">
-                <span className="segment__item__info__title">
-                    {stops.length}
-                    {transplants}
-                </span>
+                <span className="segment__item__info__title">{transplantsName(stops.length)}</span>
                 <span className="segment__item__date">{stops.join(', ')}</span>
             </div>
         </div>

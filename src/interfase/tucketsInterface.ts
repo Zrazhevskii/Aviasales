@@ -23,9 +23,11 @@ export interface TicketItem {
 
 export interface TicketsState {
     tickets: TicketItem[];
+    copyTickets: TicketItem[];
     loading: boolean;
     error: boolean;
     showMoreTickets: number;
+    noResult: boolean;
 }
 
 // export interface TicketsAll {

@@ -13,11 +13,11 @@ const initialState: headerState = {
             title: 'САМЫЙ БЫСТРЫЙ',
             status: false,
         },
-        {
-            id: 3,
-            title: 'САМЫЙ ОПТИМАЛЬНЫЙ',
-            status: false,
-        },
+        // {
+        //     id: 3,
+        //     title: 'САМЫЙ ОПТИМАЛЬНЫЙ',
+        //     status: false,
+        // },
     ],
 };
 

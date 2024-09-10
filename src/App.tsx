@@ -5,6 +5,7 @@ import Header from './components/Header/index';
 import TicketList from './components/TicketList/index';
 import getSearchId from './servises/TicketsApi';
 import { useAppDispatch } from './hooks/hooks';
+import { sortPriceTicket } from './store/TicketsSlice';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -13,6 +14,7 @@ function App() {
         if (localStorage.getItem('searchId') === null) {
             dispatch(getSearchId());
         }
+        dispatch(sortPriceTicket());
     }, [dispatch]);
 
     return (
