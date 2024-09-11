@@ -3,7 +3,7 @@ import TicketSegment from '../TicketSegment/index';
 import { TicketItem } from '../../interfase/tucketsInterface';
 import './Ticket.css';
 
-export default function Ticket({ price, carrier, segments }: TicketItem) {
+export default function Ticket({ price, carrier, segments }: TicketItem): JSX.Element {
     return (
         <section className="ticket__box">
             <div className="ticket__box__header">

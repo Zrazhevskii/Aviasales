@@ -4,7 +4,7 @@ import { TicketsSegments } from '../../interfase/tucketsInterface';
 import formateDate from '../../utils/formateDate';
 import transplantsName from '../../utils/transplantsName';
 
-export default function TicketSegment({ origin, destination, date, stops, duration }: TicketsSegments) {
+export default function TicketSegment({ origin, destination, date, stops, duration }: TicketsSegments): JSX.Element {
     const min = duration % 60;
     const hourDuration = Math.floor(duration / 60);
 

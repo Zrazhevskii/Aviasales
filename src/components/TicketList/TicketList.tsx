@@ -1,5 +1,3 @@
-// import React from 'react';
-// import { firstBy } from 'thenby';
 import { useEffect } from 'react';
 import './TicketList.css';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,7 +5,7 @@ import { Alert, Spin } from 'antd';
 import Ticket from '../Ticket.tsx';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import { addCopyTickets, addTickets, moreTickets, noResultTickets } from '../../store/TicketsSlice';
-import { TicketItem, TicketsSegments } from '../../interfase/tucketsInterface';
+import { TicketItem } from '../../interfase/tucketsInterface';
 
 export default function TicketList(): JSX.Element {
     const dispatch = useAppDispatch();
@@ -21,14 +19,6 @@ export default function TicketList(): JSX.Element {
     useEffect(() => {
         dispatch(addTickets(tickets));
     }, [dispatch, tickets]);
-
-    function sumFastTicket(item: TicketsSegments[]) {
-        let sum = 0;
-        item.forEach((elem) => {
-            sum += elem.duration;
-        });
-        return sum;
-    }
 
     useEffect(() => {
         const filterArr: TicketItem[] = [];
@@ -69,7 +59,12 @@ export default function TicketList(): JSX.Element {
             const sortPrice = filterArr.sort((a, b) => (a.price > b.price ? 1 : -1));
             dispatch(addCopyTickets(sortPrice));
         } else if (fastTicket.status) {
-            const sortFast = filterArr.sort((a, b) => (sumFastTicket(a.segments) > sumFastTicket(b.segments) ? 1 : -1));
+            const sortFast = filterArr.sort((a, b) => {
+                const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
+                const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
+                return sortedA - sortedB;
+            });
+
             dispatch(addCopyTickets(sortFast));
         }
     }, [choiceList, dispatch, tickets, cheapTicket.status, fastTicket.status]);

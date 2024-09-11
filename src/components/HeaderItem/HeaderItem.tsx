@@ -4,7 +4,7 @@ import { headerItem } from '../../interfase/headerinterface';
 import { changeStatusHeaderElem } from '../../store/HeaderSlice';
 import classes from './HeaderItem.module.scss';
 
-export default function HeaderItem({ id, title, status }: headerItem) {
+export default function HeaderItem({ id, title, status }: headerItem): JSX.Element {
     const dispatch = useAppDispatch();
     // const className = status ?
     return (

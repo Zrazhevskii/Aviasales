@@ -2,7 +2,7 @@ import { useAppSelector } from '../../hooks/hooks';
 import AsideBarItem from '../AsideBarItem/AsideBarItem';
 import classes from './AsideBar.module.scss';
 
-export default function AsideBar() {
+export default function AsideBar(): JSX.Element {
     const asideItems = useAppSelector((state) => state.aside.choiceList);
     return (
         <aside className={classes.aviasales__menu}>
