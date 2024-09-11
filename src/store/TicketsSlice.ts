@@ -197,7 +197,9 @@ const TicketSlice = createSlice({
     initialState,
     reducers: {
         addTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
-            // state.tickets = [...state.tickets, ...payload];
+            state.copyTickets = payload;
+        },
+        addCopyTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
             state.copyTickets = payload;
         },
         errorTicket: (state, { payload }: PayloadAction<boolean>) => {
@@ -239,6 +241,7 @@ const TicketSlice = createSlice({
 
 export const {
     addTickets,
+    addCopyTickets,
     errorTicket,
     loadingTickets,
     moreTickets,
