@@ -28,8 +28,6 @@ export interface TicketsState {
     error: boolean;
     showMoreTickets: number;
     noResult: boolean;
+    isSearchId: boolean;
+    stop: boolean;
 }
-
-// export interface TicketsAll {
-//     tickets: TicketItem[];
-// }

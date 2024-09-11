@@ -12,7 +12,10 @@ export default function TicketList(): JSX.Element {
     const dispatch = useAppDispatch();
     const cheapTicket = useAppSelector((state) => state.header.choiceHeader[0]);
     const fastTicket = useAppSelector((state) => state.header.choiceHeader[1]);
-    const { tickets, copyTickets, showMoreTickets, noResult, loading } = useAppSelector((state) => state.aviTickets);
+    const optimalTicket = useAppSelector((state) => state.header.choiceHeader[2]);
+    const { tickets, copyTickets, showMoreTickets, noResult, loading, stop } = useAppSelector(
+        (state) => state.aviTickets,
+    );
     const { choiceList } = useAppSelector((state) => state.aside);
 
     useEffect(() => {
@@ -61,33 +64,40 @@ export default function TicketList(): JSX.Element {
             const sortFast = filterArr.sort((a, b) => {
                 const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
                 const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
-                return sortedA - sortedB;
+                return sortedA > sortedB ? 1 : -1;
             });
 
             dispatch(addCopyTickets(sortFast));
+        } else if (optimalTicket.status) {
+            const sortOptimal = filterArr.sort((a, b) => {
+                const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
+                const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
+                return optimalA > optimalB ? 1 : -1;
+            });
+            dispatch(addCopyTickets(sortOptimal));
         }
-    }, [choiceList, dispatch, tickets, cheapTicket.status, fastTicket.status]);
+    }, [choiceList, dispatch, tickets, cheapTicket.status, fastTicket.status, optimalTicket.status]);
 
     if (noResult) {
         return (
             <Alert
                 message="Informational Notes"
-                description="Результатов нет, фильтры не выбраны"
+                description="Рейсов, подходящих под заданные фильтры, не найдено"
                 type="info"
                 showIcon
             />
         );
     }
 
-    if (loading) {
-        return <Spin size="large" className="spin__image" />;
-    }
+    const isStop = <div>К сожалению, это все результаты. Можете поменять фильтры.</div>;
 
     return (
         <section className="wrapper__tickets">
             {copyTickets.slice(0, showMoreTickets).map((item) => (
                 <Ticket key={uuidv4()} {...item} />
             ))}
+            {loading && <Spin size="large" className="spin__image" />}
+            {stop && isStop}
             <TicketListButton />
         </section>
     );

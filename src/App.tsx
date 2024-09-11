@@ -4,20 +4,33 @@ import classes from './App.module.scss';
 import AsideBar from './components/AsideBar/index';
 import Header from './components/Header/index';
 import TicketList from './components/TicketList/index';
-import getSearchId from './servises/TicketsApi';
+import { getSearchId, getTickets } from './servises/TicketsApi';
 import { useAppDispatch, useAppSelector } from './hooks/hooks';
-import { sortPriceTicket } from './store/TicketsSlice';
+import { sortPriceTicket, toggleIsSearchId } from './store/TicketsSlice';
 
 function App() {
     const dispatch = useAppDispatch();
-    const { error } = useAppSelector((state) => state.aviTickets);
+    const { error, isSearchId } = useAppSelector((state) => state.aviTickets);
+    // localStorage.removeItem('searchId');
+    // console.log(localStorage.removeItem('searchId'));
+    // if (!localStorage.removeItem('searchId')) {
+    //     console.log('нет ничего');
+    // }
 
     useEffect(() => {
         if (localStorage.getItem('searchId') === null) {
             dispatch(getSearchId());
+        } else {
+            dispatch(toggleIsSearchId());
         }
-        dispatch(sortPriceTicket());
     }, [dispatch]);
+
+    useEffect(() => {
+        if (isSearchId) {
+            dispatch(getTickets());
+            dispatch(sortPriceTicket());
+        }
+    }, [dispatch, isSearchId]);
 
     if (error) {
         return <Alert message="Error" description="Что-то пошло не так, перегрузите страницу" type="error" showIcon />;

@@ -2,16 +2,21 @@
 import { useAppDispatch } from '../../hooks/hooks';
 import { headerItem } from '../../interfase/headerinterface';
 import { changeStatusHeaderElem } from '../../store/HeaderSlice';
+import { addMoreTickets } from '../../store/TicketsSlice';
 import classes from './HeaderItem.module.scss';
 
 export default function HeaderItem({ id, title, status }: headerItem): JSX.Element {
     const dispatch = useAppDispatch();
-    // const className = status ?
+    const handleChangeStatus = () => {
+        dispatch(changeStatusHeaderElem(id));
+        dispatch(addMoreTickets());
+    };
+
     return (
         <button
             type="button"
             className={`${classes.header__btn} ${status && classes['header__btn-active']}`}
-            onClick={() => dispatch(changeStatusHeaderElem(id))}
+            onClick={handleChangeStatus}
         >
             {title}
         </button>
