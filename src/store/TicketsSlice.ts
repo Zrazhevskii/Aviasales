@@ -196,18 +196,18 @@ const TicketSlice = createSlice({
     name: 'aviatickets',
     initialState,
     reducers: {
-        addTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
-            state.copyTickets = payload;
-        },
+        // addTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
+        //     state.copyTickets = payload;
+        // },
         addCopyTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
             state.copyTickets = payload;
         },
-        errorTicket: (state, { payload }: PayloadAction<boolean>) => {
-            state.error = payload;
-        },
-        loadingTickets: (state) => {
-            state.loading = !state.loading;
-        },
+        // errorTicket: (state, { payload }: PayloadAction<boolean>) => {
+        //     state.error = payload;
+        // },
+        // loadingTickets: (state) => {
+        //     state.loading = !state.loading;
+        // },
         moreTickets: (state) => {
             state.showMoreTickets += 5;
         },
@@ -240,10 +240,10 @@ const TicketSlice = createSlice({
 });
 
 export const {
-    addTickets,
+    // addTickets,
     addCopyTickets,
-    errorTicket,
-    loadingTickets,
+    // errorTicket,
+    // loadingTickets,
     moreTickets,
     sortPriceTicket,
     noResultTickets,

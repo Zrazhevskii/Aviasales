@@ -17,22 +17,6 @@
         align-items: center;
         user-select: none;
         width: 200px;
-        // background-color: black;
-
-        // &::before {
-        //     display: inline-block;
-        //     width: 15px;
-        //     height: 15px;
-        //     background-color: black;
-        //     // flex-shrink: 0;
-        //     // flex-grow: 0;
-        //     border: 1px solid #6b9ac9;
-        //     // border-radius: 0.25em;
-        //     // margin-right: 0.5em;
-        //     // background-repeat: no-repeat;
-        //     // background-position: center center;
-        //     // background-size: 50% 50%;
-        // }
     }
 
     &__input {
@@ -40,12 +24,12 @@
         width: 25px;
         height: 20px;
         background-image: url('../../assets/checkboxnull.png');
-    }
 
-    &__input:checked {
-        width: 25px;
-        height: 20px;
-        background-image: url('../../assets/checkbox.png');
+        &:checked {
+            width: 25px;
+            height: 20px;
+            background-image: url('../../assets/checkbox.png');
+        }
     }
 
     &__title {

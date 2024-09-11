@@ -1,17 +1,17 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { errorTicket } from '../store/TicketsSlice';
+// import { errorTicket } from '../store/TicketsSlice';
 import { TicketItem } from '../interfase/tucketsInterface';
 
 const idUrl = 'https://aviasales-test-api.kata.academy/search';
 
-const getSearchId = createAsyncThunk('idName/fetchIdName', (_, { dispatch }) => {
+const getSearchId = createAsyncThunk('idName/fetchIdName', (_, { rejectWithValue }) => {
     const response = axios
         .get(idUrl)
         .then((data) => {
-            localStorage.setItem('searchId', data.data.searchId);
+            return localStorage.setItem('searchId', data.data.searchId);
         })
-        .catch(() => dispatch(errorTicket(true)));
+        .catch((error) => rejectWithValue(error.message));
     return response;
 });
 
@@ -31,9 +31,7 @@ export const getTickets = createAsyncThunk<TicketItem[], { rejectWithValue: stri
                 return data.data;
                 // }
             })
-            .catch((error) => {
-                return rejectWithValue(error.message);
-            });
+            .catch((error) => rejectWithValue(error.message));
         return response;
     },
 );

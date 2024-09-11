@@ -4,20 +4,19 @@ import { v4 as uuidv4 } from 'uuid';
 import { Alert, Spin } from 'antd';
 import Ticket from '../Ticket.tsx';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
-import { addCopyTickets, addTickets, moreTickets, noResultTickets } from '../../store/TicketsSlice';
+import { addCopyTickets, noResultTickets } from '../../store/TicketsSlice';
 import { TicketItem } from '../../interfase/tucketsInterface';
+import TicketListButton from '../TicketListButton/TicketListButton.tsx';
 
 export default function TicketList(): JSX.Element {
     const dispatch = useAppDispatch();
     const cheapTicket = useAppSelector((state) => state.header.choiceHeader[0]);
     const fastTicket = useAppSelector((state) => state.header.choiceHeader[1]);
-    const { tickets, copyTickets, showMoreTickets, noResult, error, loading } = useAppSelector(
-        (state) => state.aviTickets,
-    );
+    const { tickets, copyTickets, showMoreTickets, noResult, loading } = useAppSelector((state) => state.aviTickets);
     const { choiceList } = useAppSelector((state) => state.aside);
 
     useEffect(() => {
-        dispatch(addTickets(tickets));
+        dispatch(addCopyTickets(tickets));
     }, [dispatch, tickets]);
 
     useEffect(() => {
@@ -80,10 +79,6 @@ export default function TicketList(): JSX.Element {
         );
     }
 
-    if (error) {
-        return <Alert message="Error" description="Что-то пошло не так, перегрузите страницу" type="error" showIcon />;
-    }
-
     if (loading) {
         return <Spin size="large" className="spin__image" />;
     }
@@ -93,13 +88,7 @@ export default function TicketList(): JSX.Element {
             {copyTickets.slice(0, showMoreTickets).map((item) => (
                 <Ticket key={uuidv4()} {...item} />
             ))}
-            <button
-                type="button"
-                className="wrapper__tickets__btn__more__tickets"
-                onClick={() => dispatch(moreTickets())}
-            >
-                ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
-            </button>
+            <TicketListButton />
         </section>
     );
 }
