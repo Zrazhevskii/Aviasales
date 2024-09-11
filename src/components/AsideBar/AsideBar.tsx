@@ -1,5 +1,5 @@
 import { useAppSelector } from '../../hooks/hooks';
-import AsideBarItem from '../AsideBarItem/AsideBarItem';
+import AsideBarItem from '../AsideBarItem/index';
 import classes from './AsideBar.module.scss';
 
 export default function AsideBar(): JSX.Element {

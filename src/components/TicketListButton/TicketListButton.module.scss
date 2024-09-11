@@ -12,9 +12,9 @@
     margin-top: 20px;
     border: none;
     border-radius: 5px;
-}
 
-.wrapper__tickets__btn__more__tickets:hover {
-    cursor: pointer;
-    background-color: #4aacfd;
+    &:hover {
+        cursor: pointer;
+        background-color: #4aacfd;
+    }
 }

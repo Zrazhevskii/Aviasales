@@ -1,12 +1,12 @@
 import { useEffect } from 'react';
-import './TicketList.css';
 import { v4 as uuidv4 } from 'uuid';
 import { Alert, Spin } from 'antd';
+import classes from './TicketList.module.scss';
 import Ticket from '../Ticket.tsx';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import { addCopyTickets, noResultTickets } from '../../store/TicketsSlice';
 import { TicketItem } from '../../interfase/tucketsInterface';
-import TicketListButton from '../TicketListButton/TicketListButton.tsx';
+import TicketListButton from '../TicketListButton/index';
 
 export default function TicketList(): JSX.Element {
     const dispatch = useAppDispatch();
@@ -92,11 +92,11 @@ export default function TicketList(): JSX.Element {
     const isStop = <div>К сожалению, это все результаты. Можете поменять фильтры.</div>;
 
     return (
-        <section className="wrapper__tickets">
+        <section className={classes.wrapper__tickets}>
             {copyTickets.slice(0, showMoreTickets).map((item) => (
                 <Ticket key={uuidv4()} {...item} />
             ))}
-            {loading && <Spin size="large" className="spin__image" />}
+            {loading && <Spin size="large" className={classes.spin__image} />}
             {stop && isStop}
             <TicketListButton />
         </section>
