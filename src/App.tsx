@@ -11,14 +11,9 @@ import { toggleIsSearchId } from './store/TicketsSlice';
 function App() {
     const dispatch = useAppDispatch();
     const { error, isSearchId } = useAppSelector((state) => state.aviTickets);
-    // localStorage.removeItem('searchId');
-    // console.log(localStorage.removeItem('searchId'));
-    // if (!localStorage.removeItem('searchId')) {
-    //     console.log('нет ничего');
-    // }
 
     useEffect(() => {
-        if (localStorage.getItem('searchId') === null) {
+        if (!sessionStorage.getItem('searchId')) {
             dispatch(getSearchId());
         } else {
             dispatch(toggleIsSearchId());
@@ -28,7 +23,6 @@ function App() {
     useEffect(() => {
         if (isSearchId) {
             dispatch(getTickets());
-            // dispatch(sortPriceTicket());
         }
     }, [dispatch, isSearchId]);
 

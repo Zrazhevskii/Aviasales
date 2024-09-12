@@ -5,6 +5,7 @@ import classes from './TicketList.module.scss';
 import Ticket from '../Ticket.tsx';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import {
+    addCopyTickets,
     noResultTickets,
     sortOptimalCopyTickets,
     sortPriceCopyTicket,
@@ -24,8 +25,7 @@ export default function TicketList(): JSX.Element {
     const { choiceList } = useAppSelector((state) => state.aside);
 
     useEffect(() => {
-        // dispatch(addCopyTickets(tickets));
-        dispatch(sortPriceCopyTicket(tickets));
+        dispatch(addCopyTickets(tickets));
     }, [dispatch, tickets]);
 
     useEffect(() => {
@@ -37,26 +37,23 @@ export default function TicketList(): JSX.Element {
             dispatch(noResultTickets(false));
         }
         const filters = choiceList.filter((elem) => elem.status).map((i) => i.id);
+        // console.log(tickets);
 
         filters.forEach((filId) => {
             switch (filId) {
                 case 11:
                     break;
                 case 10:
-                    filterArr.push(
-                        ...tickets.filter(
-                            (elem) => elem.segments[0].stops.length === 0 && elem.segments[1].stops.length === 0,
-                        ),
-                    );
+                    filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 0)));
                     break;
                 case 1:
-                    filterArr.push(...tickets.filter((elem) => elem.segments[0].stops.length === 1));
+                    filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 1)));
                     break;
                 case 2:
-                    filterArr.push(...tickets.filter((elem) => elem.segments[0].stops.length === 2));
+                    filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 2)));
                     break;
                 case 3:
-                    filterArr.push(...tickets.filter((elem) => elem.segments[0].stops.length === 3));
+                    filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 3)));
                     break;
                 default:
                     break;
@@ -64,22 +61,10 @@ export default function TicketList(): JSX.Element {
         });
 
         if (cheapTicket.status) {
-            // const sortPrice = filterArr.sort((a, b) => (a.price > b.price ? 1 : -1));
             dispatch(sortPriceCopyTicket(filterArr));
         } else if (fastTicket.status) {
-            // const sortFast = filterArr.sort((a, b) => {
-            //     const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
-            //     const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
-            //     return sortedA > sortedB ? 1 : -1;
-            // });
-
             dispatch(sortSpeedCopyTickets(filterArr));
         } else if (optimalTicket.status) {
-            // const sortOptimal = filterArr.sort((a, b) => {
-            //     const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
-            //     const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
-            //     return optimalA > optimalB ? 1 : -1;
-            // });
             dispatch(sortOptimalCopyTickets(filterArr));
         }
     }, [choiceList, dispatch, tickets, cheapTicket.status, fastTicket.status, optimalTicket.status]);
@@ -95,7 +80,7 @@ export default function TicketList(): JSX.Element {
         );
     }
 
-    const isStop = <div>К сожалению, это все результаты. Можете поменять фильтры.</div>;
+    const isStop = <div className={classes.no__result}>К сожалению, это все результаты. Можете поменять фильтры.</div>;
 
     return (
         <section className={classes.wrapper__tickets}>
@@ -103,7 +88,7 @@ export default function TicketList(): JSX.Element {
                 <Ticket key={uuidv4()} {...item} />
             ))}
             {loading && <Spin size="large" className={classes.spin__image} />}
-            {stop && isStop}
+            {stop && copyTickets.length !== 0 ? isStop : null}
             <TicketListButton />
         </section>
     );

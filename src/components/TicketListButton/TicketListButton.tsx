@@ -9,12 +9,12 @@ export default function TicketListButton() {
     const { copyTickets, showMoreTickets, stop, loading } = useAppSelector((state) => state.aviTickets);
 
     useEffect(() => {
-        if (showMoreTickets === copyTickets.length) {
+        if (showMoreTickets >= copyTickets.length - 5) {
             dispatch(getTickets());
         }
     }, [dispatch, showMoreTickets, copyTickets]);
 
-    const className: boolean = stop || loading || !copyTickets.length || copyTickets.length === showMoreTickets;
+    const className: boolean = stop || loading || !copyTickets.length || copyTickets.length <= showMoreTickets;
     return (
         <button
             type="button"

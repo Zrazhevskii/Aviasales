@@ -4,7 +4,7 @@ import HeaderItem from '../HeaderItem/index';
 
 export default function Header(): JSX.Element {
     const headerItems = useAppSelector((state) => state.header.choiceHeader);
-    // console.log(headerItems);
+
     return (
         <div className={classes.header}>
             {headerItems.map((elem) => (

@@ -1,16 +1,12 @@
-// import React from 'react'
 import classes from './AsideBarItem.module.scss';
 import { useAppDispatch } from '../../hooks/hooks';
 import { toggleStatus, toggleAllItemStatus } from '../../store/AsideSlise';
 import { asideItem } from '../../interfase/asideInterface';
-// import { getTickets } from '../../servises/TicketsApi';
 
 export default function AsideBarItem({ id, title, status }: asideItem): JSX.Element {
     const dispatch = useAppDispatch();
-
     const changeStatusHandle = (idItem: number) => {
         if (idItem === 11) {
-            // dispatch(getTickets());
             return dispatch(toggleAllItemStatus());
         }
         return dispatch(toggleStatus(idItem));
@@ -30,5 +26,3 @@ export default function AsideBarItem({ id, title, status }: asideItem): JSX.Elem
         </li>
     );
 }
-
-// export default AsideBarItem;

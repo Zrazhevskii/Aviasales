@@ -1,4 +1,3 @@
-// import React from 'react'
 import classes from './TicketSegment.module.scss';
 import { TicketsSegments } from '../../interfase/tucketsInterface';
 import formateDate from '../../utils/formateDate';

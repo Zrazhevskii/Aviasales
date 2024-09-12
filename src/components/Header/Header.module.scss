@@ -13,9 +13,11 @@
 }
 
 .header button:first-child {
+    border-right: 1px solid lightgray;
     border-radius: 5px 0 0 5px;
 }
 
 .header button:last-child {
+    border-left: 1px solid lightgray;
     border-radius: 0 5px 5px 0;
 }
