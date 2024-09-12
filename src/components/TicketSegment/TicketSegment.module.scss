@@ -1,3 +1,5 @@
+@import '../../style/var.scss';
+
 .segment__item {
     width: 100%;
     height: 58px;
@@ -14,7 +16,7 @@
     &__info__title {
         font-size: 12px;
         font-weight: 700;
-        color: #a0b0b9;
+        color: $info-color;
         margin-bottom: 5px;
     }
 

@@ -202,6 +202,7 @@ const TicketSlice = createSlice({
     name: 'aviatickets',
     initialState,
     reducers: {
+        // addCopyTickets подудаление
         addCopyTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
             state.copyTickets = payload;
         },
@@ -215,8 +216,25 @@ const TicketSlice = createSlice({
             state.tickets = state.tickets.sort((a, b) => (a.price > b.price ? 1 : -1));
         },
         sortPriceCopyTicket: (state, { payload }: PayloadAction<TicketItem[]>) => {
-            state.copyTickets = payload;
-            state.copyTickets = state.copyTickets.sort((a, b) => (a.price > b.price ? 1 : -1));
+            // state.copyTickets = payload;
+            state.copyTickets = payload.sort((a, b) => (a.price > b.price ? 1 : -1));
+        },
+        sortSpeedCopyTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
+            state.copyTickets = payload.sort((a, b) => {
+                const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
+                const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
+                return sortedA > sortedB ? 1 : -1;
+            });
+            // state.copyTickets = state.copyTickets.sort((a, b) => (a.price > b.price ? 1 : -1));
+        },
+        sortOptimalCopyTickets: (state, { payload }: PayloadAction<TicketItem[]>) => {
+            state.copyTickets = payload.sort((a, b) => {
+                const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
+                const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
+                return optimalA > optimalB ? 1 : -1;
+            });
+            // state.copyTickets = sortOptimal;
+            // state.copyTickets = state.copyTickets.sort((a, b) => (a.price > b.price ? 1 : -1));
         },
         noResultTickets: (state, { payload }: PayloadAction<boolean>) => {
             state.noResult = payload;
@@ -250,13 +268,15 @@ const TicketSlice = createSlice({
 });
 
 export const {
-    addMoreTickets,
+    addMoreTickets, // под удаление
     addCopyTickets,
     moreTickets,
     sortPriceTicket,
+    sortOptimalCopyTickets,
     noResultTickets,
     sortPriceCopyTicket,
     toggleIsSearchId,
+    sortSpeedCopyTickets,
 } = TicketSlice.actions;
 
 export default TicketSlice.reducer;

@@ -1,3 +1,5 @@
+@import '../../style/var.scss';
+
 .ticket__box {
     box-sizing: border-box;
     display: flex;
@@ -7,9 +9,9 @@
     height: 184px;
     margin-top: 20px;
 
-    background-color: #ffffff;
+    background-color: $white-color;
     border-radius: 5px;
-    box-shadow: 3px 6px 13px 0px rgba(0, 0, 0, 0.33);
+    box-shadow: 3px 6px 13px 0px $box-shadow;
 
     padding: 0 20px 10px 20px;
 
@@ -28,7 +30,7 @@
     &__price {
         font-size: 24px;
         font-weight: 700;
-        color: #2196f3;
+        color: $active-color;
         width: 30%;
     }
 

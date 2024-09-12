@@ -6,7 +6,7 @@ import Header from './components/Header/index';
 import TicketList from './components/TicketList/index';
 import { getSearchId, getTickets } from './servises/TicketsApi';
 import { useAppDispatch, useAppSelector } from './hooks/hooks';
-import { sortPriceTicket, toggleIsSearchId } from './store/TicketsSlice';
+import { toggleIsSearchId } from './store/TicketsSlice';
 
 function App() {
     const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ function App() {
     useEffect(() => {
         if (isSearchId) {
             dispatch(getTickets());
-            dispatch(sortPriceTicket());
+            // dispatch(sortPriceTicket());
         }
     }, [dispatch, isSearchId]);
 

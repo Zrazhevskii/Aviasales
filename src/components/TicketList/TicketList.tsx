@@ -4,7 +4,12 @@ import { Alert, Spin } from 'antd';
 import classes from './TicketList.module.scss';
 import Ticket from '../Ticket.tsx';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
-import { addCopyTickets, noResultTickets } from '../../store/TicketsSlice';
+import {
+    noResultTickets,
+    sortOptimalCopyTickets,
+    sortPriceCopyTicket,
+    sortSpeedCopyTickets,
+} from '../../store/TicketsSlice';
 import { TicketItem } from '../../interfase/tucketsInterface';
 import TicketListButton from '../TicketListButton/index';
 
@@ -19,7 +24,8 @@ export default function TicketList(): JSX.Element {
     const { choiceList } = useAppSelector((state) => state.aside);
 
     useEffect(() => {
-        dispatch(addCopyTickets(tickets));
+        // dispatch(addCopyTickets(tickets));
+        dispatch(sortPriceCopyTicket(tickets));
     }, [dispatch, tickets]);
 
     useEffect(() => {
@@ -58,23 +64,23 @@ export default function TicketList(): JSX.Element {
         });
 
         if (cheapTicket.status) {
-            const sortPrice = filterArr.sort((a, b) => (a.price > b.price ? 1 : -1));
-            dispatch(addCopyTickets(sortPrice));
+            // const sortPrice = filterArr.sort((a, b) => (a.price > b.price ? 1 : -1));
+            dispatch(sortPriceCopyTicket(filterArr));
         } else if (fastTicket.status) {
-            const sortFast = filterArr.sort((a, b) => {
-                const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
-                const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
-                return sortedA > sortedB ? 1 : -1;
-            });
+            // const sortFast = filterArr.sort((a, b) => {
+            //     const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
+            //     const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
+            //     return sortedA > sortedB ? 1 : -1;
+            // });
 
-            dispatch(addCopyTickets(sortFast));
+            dispatch(sortSpeedCopyTickets(filterArr));
         } else if (optimalTicket.status) {
-            const sortOptimal = filterArr.sort((a, b) => {
-                const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
-                const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
-                return optimalA > optimalB ? 1 : -1;
-            });
-            dispatch(addCopyTickets(sortOptimal));
+            // const sortOptimal = filterArr.sort((a, b) => {
+            //     const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
+            //     const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
+            //     return optimalA > optimalB ? 1 : -1;
+            // });
+            dispatch(sortOptimalCopyTickets(filterArr));
         }
     }, [choiceList, dispatch, tickets, cheapTicket.status, fastTicket.status, optimalTicket.status]);
 

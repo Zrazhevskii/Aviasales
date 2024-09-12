@@ -1,13 +1,13 @@
-$menu-color: #ffffff;
+@import '../../style/var.scss';
 
 .aviasales__menu {
     width: 232px;
     height: 258px;
-    background-color: $menu-color;
+    background-color: $white-color;
     border-radius: 5px;
     margin: 0;
     padding: 0;
-    box-shadow: 3px 6px 13px 0px rgba(0, 0, 0, 0.33);
+    box-shadow: 3px 6px 13px 0px $box-shadow;
 
     &__title {
         font-size: 12px;
