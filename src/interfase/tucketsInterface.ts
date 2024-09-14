@@ -28,6 +28,6 @@ export interface TicketsState {
     error: boolean;
     showMoreTickets: number;
     noResult: boolean;
-    isSearchId: boolean;
+    isSearchId: string;
     stop: boolean;
 }

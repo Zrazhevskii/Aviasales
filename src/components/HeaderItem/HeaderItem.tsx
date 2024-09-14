@@ -7,7 +7,8 @@ import classes from './HeaderItem.module.scss';
 
 export default function HeaderItem({ id, title, status }: headerItem): JSX.Element {
     const dispatch = useAppDispatch();
-    const handleChangeStatus = () => {
+
+    const handleChangeStatus = (): void => {
         dispatch(changeStatusHeaderElem(id));
         dispatch(addMoreTickets());
     };

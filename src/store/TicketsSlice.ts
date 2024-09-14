@@ -9,7 +9,7 @@ const initialState: TicketsState = {
     error: false,
     showMoreTickets: 5,
     noResult: false,
-    isSearchId: false,
+    isSearchId: '',
     stop: false,
 };
 
@@ -50,9 +50,9 @@ const TicketSlice = createSlice({
         noResultTickets: (state, { payload }: PayloadAction<boolean>) => {
             state.noResult = payload;
         },
-        toggleIsSearchId: (state) => {
-            state.isSearchId = !state.isSearchId;
-        },
+        // toggleIsSearchId: (state, { payload }: PayloadAction<string>) => {
+        //     state.isSearchId = payload;
+        // },
         toggleStop: (state, { payload }: PayloadAction<boolean>) => {
             state.stop = payload;
         },
@@ -62,11 +62,12 @@ const TicketSlice = createSlice({
             .addCase(getTickets.pending, (state) => {
                 state.loading = true;
             })
-            .addCase(getSearchId.fulfilled, (state) => {
-                state.isSearchId = true;
+            .addCase(getSearchId.fulfilled, (state, { payload }) => {
+                console.log('я получаю id - ', payload);
+                state.isSearchId = payload;
             })
             .addCase(getTickets.fulfilled, (state, { payload }) => {
-                console.log('Это payload, получаю payload - ', payload);
+                console.log('Это payload, получаю массив билетов - ', payload);
                 if (payload) {
                     if (payload.stop) {
                         console.log('я где stop true');
@@ -99,7 +100,7 @@ export const {
     sortOptimalCopyTickets,
     noResultTickets,
     sortPriceCopyTicket,
-    toggleIsSearchId,
+    // toggleIsSearchId,
     sortSpeedCopyTickets,
     toggleStop,
 } = TicketSlice.actions;
