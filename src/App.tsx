@@ -10,7 +10,8 @@ import { toggleIsSearchId } from './store/TicketsSlice';
 
 function App() {
     const dispatch = useAppDispatch();
-    const { error, isSearchId } = useAppSelector((state) => state.aviTickets);
+    const { error, isSearchId, stop } = useAppSelector((state) => state.aviTickets);
+    console.log(stop);
 
     useEffect(() => {
         if (!sessionStorage.getItem('searchId')) {
@@ -21,14 +22,24 @@ function App() {
     }, [dispatch]);
 
     useEffect(() => {
-        if (isSearchId) {
+        if (isSearchId && !stop) {
             dispatch(getTickets());
         }
-    }, [dispatch, isSearchId]);
+    }, [dispatch, isSearchId, stop]);
 
-    if (error) {
-        return <Alert message="Error" description="Что-то пошло не так, перегрузите страницу" type="error" showIcon />;
-    }
+    // useEffect(() => {
+    //     if (!sessionStorage.getItem('searchId')) {
+    //         dispatch(getSearchId());
+    //     } else {
+    //         dispatch(toggleIsSearchId());
+    //     }
+    // }, [dispatch]);
+
+    // useEffect(() => {
+    //     if (isSearchId && !stop) {
+    //         dispatch(getTickets());
+    //     }
+    // }, [dispatch, isSearchId, stop]);
 
     return (
         <div className={classes.wrapper__app}>
@@ -36,7 +47,16 @@ function App() {
                 <AsideBar />
                 <div className={classes.wrapper__context}>
                     <Header />
-                    <TicketList />
+                    {error ? (
+                        <Alert
+                            message="Error"
+                            description="Что-то пошло не так, перегрузите страницу"
+                            type="error"
+                            showIcon
+                        />
+                    ) : (
+                        <TicketList />
+                    )}
                 </div>
             </div>
         </div>

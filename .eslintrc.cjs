@@ -44,6 +44,7 @@ module.exports = {
     },
     plugins: ['@typescript-eslint', 'react-refresh', 'react', 'import', 'jsx-a11y'],
     rules: {
+        'consistent-return': 'off', 
         'react/jsx-props-no-spreading': 'off',
         'import/no-unresolved': [2, { caseSensitive: false }],
         'react/react-in-jsx-scope': 'off',

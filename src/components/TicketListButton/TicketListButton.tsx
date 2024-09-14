@@ -1,20 +1,14 @@
-import { useEffect } from 'react';
 import classes from './TicketListButton.module.scss';
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
 import { moreTickets } from '../../store/TicketsSlice';
-import { getTickets } from '../../servises/TicketsApi';
 
 export default function TicketListButton() {
     const dispatch = useAppDispatch();
-    const { copyTickets, showMoreTickets, stop, loading } = useAppSelector((state) => state.aviTickets);
+    const { stop, loading } = useAppSelector((state) => state.aviTickets);
+    // const { copyTickets, stop, loading } = useAppSelector((state) => state.aviTickets);
 
-    useEffect(() => {
-        if (showMoreTickets >= copyTickets.length - 5) {
-            dispatch(getTickets());
-        }
-    }, [dispatch, showMoreTickets, copyTickets]);
-
-    const className: boolean = stop || loading || !copyTickets.length || copyTickets.length <= showMoreTickets;
+    const className: boolean = stop || loading;
+    // const className: boolean = stop || loading || !copyTickets.length;
     return (
         <button
             type="button"

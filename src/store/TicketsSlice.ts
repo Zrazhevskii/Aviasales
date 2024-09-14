@@ -1,10 +1,6 @@
-import { createSlice, PayloadAction, UnknownAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TicketItem, TicketsState } from '../interfase/tucketsInterface';
 import { getSearchId, getTickets } from '../servises/TicketsApi';
-
-function isError(action: UnknownAction) {
-    return action.type.endsWith('rejected');
-}
 
 const initialState: TicketsState = {
     tickets: [],
@@ -57,6 +53,9 @@ const TicketSlice = createSlice({
         toggleIsSearchId: (state) => {
             state.isSearchId = !state.isSearchId;
         },
+        toggleStop: (state, { payload }: PayloadAction<boolean>) => {
+            state.stop = payload;
+        },
     },
     extraReducers: (builder) => {
         builder
@@ -67,16 +66,26 @@ const TicketSlice = createSlice({
                 state.isSearchId = true;
             })
             .addCase(getTickets.fulfilled, (state, { payload }) => {
-                if (payload.stop) {
-                    state.loading = false;
-                    state.stop = true;
+                console.log('Это payload, получаю payload - ', payload);
+                if (payload) {
+                    if (payload.stop) {
+                        console.log('я где stop true');
+                        state.loading = false;
+                        state.stop = true;
+                    } else {
+                        state.stop = false;
+                        state.loading = false;
+                        state.tickets = [...state.tickets, ...payload.tickets];
+                        state.copyTickets = [...state.tickets, ...payload.tickets];
+                    }
                 }
-                state.loading = false;
-                state.tickets = [...state.tickets, ...payload.tickets];
-                state.copyTickets = [...state.tickets, ...payload.tickets];
             })
-            .addMatcher(isError, (state, { payload }: PayloadAction<boolean>) => {
-                state.error = payload;
+            .addCase(getSearchId.rejected, (state) => {
+                state.error = true;
+            })
+            .addCase(getTickets.rejected, (state, { payload }) => {
+                console.log('это получаемая ошибка - ', payload);
+                state.error = true;
                 state.loading = false;
             });
     },
@@ -92,6 +101,7 @@ export const {
     sortPriceCopyTicket,
     toggleIsSearchId,
     sortSpeedCopyTickets,
+    toggleStop,
 } = TicketSlice.actions;
 
 export default TicketSlice.reducer;

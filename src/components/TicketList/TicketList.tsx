@@ -5,11 +5,11 @@ import classes from './TicketList.module.scss';
 import Ticket from '../Ticket.tsx';
 import { useAppSelector, useAppDispatch } from '../../hooks/hooks';
 import {
-    addCopyTickets,
+    // addCopyTickets,
     noResultTickets,
-    sortOptimalCopyTickets,
-    sortPriceCopyTicket,
-    sortSpeedCopyTickets,
+    // sortOptimalCopyTickets,
+    // sortPriceCopyTicket,
+    // sortSpeedCopyTickets,
 } from '../../store/TicketsSlice';
 import { TicketItem } from '../../interfase/tucketsInterface';
 import TicketListButton from '../TicketListButton/index';
@@ -19,26 +19,77 @@ export default function TicketList(): JSX.Element {
     const cheapTicket = useAppSelector((state) => state.header.choiceHeader[0]);
     const fastTicket = useAppSelector((state) => state.header.choiceHeader[1]);
     const optimalTicket = useAppSelector((state) => state.header.choiceHeader[2]);
-    const { tickets, copyTickets, showMoreTickets, noResult, loading, stop } = useAppSelector(
-        (state) => state.aviTickets,
-    );
+    const { tickets, copyTickets, showMoreTickets, noResult, loading } = useAppSelector((state) => state.aviTickets);
+    // const { tickets, copyTickets, showMoreTickets, noResult, loading, stop } = useAppSelector(
+    //     (state) => state.aviTickets,
+    // );
     const { choiceList } = useAppSelector((state) => state.aside);
 
-    useEffect(() => {
-        dispatch(addCopyTickets(tickets));
-    }, [dispatch, tickets]);
+    // useEffect(() => {
+    //     dispatch(addCopyTickets(tickets));
+    // }, [dispatch, tickets]);
+
+    let filterArr: TicketItem[] = [];
+
+    // const copyTick = useMemo(() => {
+    //     if (choiceList.find((item) => item.status === true) === undefined) {
+    //         dispatch(noResultTickets(true));
+    //     } else {
+    //         dispatch(noResultTickets(false));
+    //     }
+    //     const filters = choiceList.filter((elem) => elem.status).map((i) => i.id);
+
+    //     filters.forEach((filId) => {
+    //         switch (filId) {
+    //             case 11:
+    //                 break;
+    //             case 10:
+    //                 filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 0)));
+    //                 break;
+    //             case 1:
+    //                 filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 1)));
+    //                 break;
+    //             case 2:
+    //                 filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 2)));
+    //                 break;
+    //             case 3:
+    //                 filterArr.push(...tickets.filter((elem) => elem.segments.find((el) => el.stops.length === 3)));
+    //                 break;
+    //             default:
+    //                 break;
+    //         }
+    //     });
+
+    //     if (cheapTicket.status) {
+    //         filterArr = filterArr.sort((a, b) => (a.price > b.price ? 1 : -1));
+    //         // dispatch(sortPriceCopyTicket(filterArr));
+    //     } else if (fastTicket.status) {
+    //         filterArr = filterArr.sort((a, b) => {
+    //             const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
+    //             const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
+    //             return sortedA > sortedB ? 1 : -1;
+    //         });
+    //         // dispatch(sortSpeedCopyTickets(filterArr));
+    //     } else if (optimalTicket.status) {
+    //         filterArr = filterArr.sort((a, b) => {
+    //             const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
+    //             const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
+    //             return optimalA > optimalB ? 1 : -1;
+    //         });
+    //         // dispatch(sortOptimalCopyTickets(filterArr));
+    //     }
+    //     return filterArr;
+    // }, [choiceList, cheapTicket.status, fastTicket.status, optimalTicket.status]);
 
     useEffect(() => {
-        const filterArr: TicketItem[] = [];
-
+        // copyTick();
+        // let filterArr: TicketItem[] = [];
         if (choiceList.find((item) => item.status === true) === undefined) {
             dispatch(noResultTickets(true));
         } else {
             dispatch(noResultTickets(false));
         }
         const filters = choiceList.filter((elem) => elem.status).map((i) => i.id);
-        // console.log(tickets);
-
         filters.forEach((filId) => {
             switch (filId) {
                 case 11:
@@ -59,15 +110,27 @@ export default function TicketList(): JSX.Element {
                     break;
             }
         });
-
         if (cheapTicket.status) {
-            dispatch(sortPriceCopyTicket(filterArr));
+            filterArr = filterArr.sort((a, b) => (a.price > b.price ? 1 : -1));
+            // dispatch(sortPriceCopyTicket(filterArr));
         } else if (fastTicket.status) {
-            dispatch(sortSpeedCopyTickets(filterArr));
+            filterArr = filterArr.sort((a, b) => {
+                const sortedA = a.segments.reduce((acc, i) => acc + i.duration, 0);
+                const sortedB = b.segments.reduce((acc, i) => acc + i.duration, 0);
+                return sortedA > sortedB ? 1 : -1;
+            });
+            // dispatch(sortSpeedCopyTickets(filterArr));
         } else if (optimalTicket.status) {
-            dispatch(sortOptimalCopyTickets(filterArr));
+            filterArr = filterArr.sort((a, b) => {
+                const optimalA = a.segments.reduce((acc, i) => acc + i.duration, 0) + a.price;
+                const optimalB = b.segments.reduce((acc, i) => acc + i.duration, 0) + b.price;
+                return optimalA > optimalB ? 1 : -1;
+            });
+            // dispatch(sortOptimalCopyTickets(filterArr));
         }
-    }, [choiceList, dispatch, tickets, cheapTicket.status, fastTicket.status, optimalTicket.status]);
+    }, []);
+
+    console.log(tickets);
 
     if (noResult) {
         return (
@@ -80,7 +143,7 @@ export default function TicketList(): JSX.Element {
         );
     }
 
-    const isStop = <div className={classes.no__result}>К сожалению, это все результаты. Можете поменять фильтры.</div>;
+    // const isStop = <div className={classes.no__result}>К сожалению, это все результаты. Можете поменять фильтры.</div>;
 
     return (
         <section className={classes.wrapper__tickets}>
@@ -88,7 +151,7 @@ export default function TicketList(): JSX.Element {
                 <Ticket key={uuidv4()} {...item} />
             ))}
             {loading && <Spin size="large" className={classes.spin__image} />}
-            {stop && copyTickets.length !== 0 ? isStop : null}
+            {/* {stop && copyTickets.length !== 0 ? isStop : null} */}
             <TicketListButton />
         </section>
     );
