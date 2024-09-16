@@ -1,6 +1,5 @@
 import { createSelector } from '@reduxjs/toolkit';
 import { RootState } from '../store/store';
-// import { headerItem } from '../interfase/headerinterface';
 import { TicketItem } from '../interfase/tucketsInterface';
 
 const selectTickets = (state: RootState) => state.aviTickets.tickets;
@@ -18,24 +17,40 @@ const ticketsFilterSelector = createSelector(
                 case 11:
                     break;
                 case 10:
-                    asideFilterArr.push(
-                        ...allTickets.filter((elem) => elem.segments.find((el) => el.stops.length === 0)),
-                    );
+                    allTickets.forEach((elem) => {
+                        const ticket = elem.segments.find((el) => el.stops.length === 0);
+                        if (ticket !== undefined) {
+                            if (asideFilterArr.includes(elem)) return;
+                            asideFilterArr.push(elem);
+                        }
+                    });
                     break;
                 case 1:
-                    asideFilterArr.push(
-                        ...allTickets.filter((elem) => elem.segments.find((el) => el.stops.length === 1)),
-                    );
+                    allTickets.forEach((elem) => {
+                        const ticket = elem.segments.find((el) => el.stops.length === 1);
+                        if (ticket !== undefined) {
+                            if (asideFilterArr.includes(elem)) return;
+                            asideFilterArr.push(elem);
+                        }
+                    });
                     break;
                 case 2:
-                    asideFilterArr.push(
-                        ...allTickets.filter((elem) => elem.segments.find((el) => el.stops.length === 2)),
-                    );
+                    allTickets.forEach((elem) => {
+                        const ticket = elem.segments.find((el) => el.stops.length === 2);
+                        if (ticket !== undefined) {
+                            if (asideFilterArr.includes(elem)) return;
+                            asideFilterArr.push(elem);
+                        }
+                    });
                     break;
                 case 3:
-                    asideFilterArr.push(
-                        ...allTickets.filter((elem) => elem.segments.find((el) => el.stops.length === 3)),
-                    );
+                    allTickets.forEach((elem) => {
+                        const ticket = elem.segments.find((el) => el.stops.length === 3);
+                        if (ticket !== undefined) {
+                            if (asideFilterArr.includes(elem)) return;
+                            asideFilterArr.push(elem);
+                        }
+                    });
                     break;
                 default:
                     break;

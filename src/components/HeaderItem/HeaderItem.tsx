@@ -2,7 +2,6 @@
 import { useAppDispatch } from '../../hooks/hooks';
 import { headerItem } from '../../interfase/headerinterface';
 import { changeStatusHeaderElem } from '../../store/HeaderSlice';
-import { addMoreTickets } from '../../store/TicketsSlice';
 import classes from './HeaderItem.module.scss';
 
 export default function HeaderItem({ id, title, status }: headerItem): JSX.Element {
@@ -10,7 +9,6 @@ export default function HeaderItem({ id, title, status }: headerItem): JSX.Eleme
 
     const handleChangeStatus = (): void => {
         dispatch(changeStatusHeaderElem(id));
-        dispatch(addMoreTickets());
     };
 
     return (

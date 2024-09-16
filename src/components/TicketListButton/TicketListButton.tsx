@@ -1,20 +1,19 @@
 import classes from './TicketListButton.module.scss';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { moreTickets } from '../../store/TicketsSlice';
+import { useAppSelector } from '../../hooks/hooks';
 
-export default function TicketListButton() {
-    const dispatch = useAppDispatch();
+interface FuncProps {
+    changeShowMore: () => void;
+}
+
+export default function TicketListButton({ changeShowMore }: FuncProps) {
     const { loading } = useAppSelector((state) => state.aviTickets);
-    // const { copyTickets, stop, loading } = useAppSelector((state) => state.aviTickets);
 
-    // const className: boolean = stop || loading;
-    // const className: boolean = stop || loading || !copyTickets.length;
     return (
         <button
             type="button"
             hidden={loading}
             className={classes.wrapper__tickets__btn__more__tickets}
-            onClick={() => dispatch(moreTickets())}
+            onClick={changeShowMore}
         >
             ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!
         </button>
