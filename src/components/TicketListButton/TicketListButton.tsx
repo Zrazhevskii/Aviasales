@@ -15,7 +15,7 @@ export default function TicketListButton({ changeShowMore }: FuncProps) {
             className={classes.wrapper__tickets__btn__more__tickets}
             onClick={changeShowMore}
         >
-            ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!!!
+            ПОКАЗАТЬ ЕЩЕ 5 БИЛЕТОВ!!!!!!
         </button>
     );
 }
